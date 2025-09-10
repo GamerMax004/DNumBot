@@ -10,6 +10,9 @@ import threading
 import discord
 from discord.ext import commands
 
+import sys, types
+sys.modules["discord.voice_client"] = types.ModuleType("discord.voice_client")
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Setup & Intents
 # ──────────────────────────────────────────────────────────────────────────────
