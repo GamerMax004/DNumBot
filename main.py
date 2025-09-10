@@ -5,7 +5,8 @@ import uuid
 from typing import Optional, List, Tuple
 from datetime import datetime
 from zoneinfo import ZoneInfo
-
+from flask import Flask
+import threading
 import discord
 from discord.ext import commands
 
@@ -21,6 +22,23 @@ intents.members = True
 intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Render Hosting
+# ──────────────────────────────────────────────────────────────────────────────
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Bot läuft!"
+
+def run_web():
+    app.run(host="0.0.0.0", port=8080)
+
+def keep_alive():
+    t = threading.Thread(target=run_web)
+    t.start()
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Datenhaltung
@@ -726,6 +744,7 @@ async def dienstnummer_info(inter: discord.Interaction, nummer: str):
 # ──────────────────────────────────────────────────────────────────────────────
 # Start
 # ──────────────────────────────────────────────────────────────────────────────
+keep_alive()
 if __name__ == "__main__":
     if not TOKEN:
         raise RuntimeError("DISCORD_TOKEN nicht gesetzt.")
