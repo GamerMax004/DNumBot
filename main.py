@@ -5,7 +5,7 @@ import uuid
 from typing import Optional, List, Tuple
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from aiohttp import web
+
 import threading
 import discord
 from discord.ext import commands
@@ -22,22 +22,6 @@ intents.members = True
 intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
-
-# ──────────────────────────────────────────────────────────────────────────────
-# Render Hosting
-# ──────────────────────────────────────────────────────────────────────────────
-
-async def handle(request):
-    return web.Response(text="Bot läuft!")
-
-def run_web():
-    app = web.Application()
-    app.router.add_get("/", handle)
-    web.run_app(app, host="0.0.0.0", port=8080)
-
-def keep_alive():
-    t = threading.Thread(target=run_web)
-    t.start()
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Datenhaltung
@@ -744,6 +728,7 @@ async def dienstnummer_info(inter: discord.Interaction, nummer: str):
 # Start
 # ──────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    TOKEN = os.getenv("DISCORD_TOKEN")
     if not TOKEN:
-        raise RuntimeError("DISCORD_TOKEN nicht gesetzt.")
+        raise RuntimeError("❌ DISCORD_TOKEN nicht gesetzt. Bitte in Render als Environment Variable hinzufügen.")
     bot.run(TOKEN)
