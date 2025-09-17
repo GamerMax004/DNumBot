@@ -1,8 +1,7 @@
 services:
-  - type: web
-    name: jakeassist
+  - type: worker
+    name: my-discord-bot
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: python main.py
-    pythonVersion: 3.11.9
