@@ -381,4 +381,4 @@ async def on_ready():
     for guild in bot.guilds:
         await update_command_overview(guild)
 
-bot.run(os.getenv("TOKEN"))
+bot.run(os.environ["TOKEN"])
