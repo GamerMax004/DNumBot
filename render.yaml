@@ -1,6 +1,6 @@
 services:
   - type: worker
-    name: my-discord-bot
+    name: JakeAssist-Bot
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
